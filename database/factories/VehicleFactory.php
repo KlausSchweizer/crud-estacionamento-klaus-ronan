@@ -21,7 +21,7 @@ class VehicleFactory extends Factory
             'brand' => $this->faker->word(),
             'model' => $this->faker->word(),
             'color' => $this->faker->colorName(),
-            'plate' => strtoupper($this->faker->bothify('???#?##')),
+            'plate' => strtoupper($this->faker->unique()->bothify('???#?##')),
         ];
     }
 }
