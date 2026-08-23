@@ -20,7 +20,7 @@ class VehicleFactory extends Factory
         return [
             'brand' => $this->faker->word(),
             'model' => $this->faker->word(),
-            'color' => $this->faker->colorName(),
+            'color' => $this->faker->randomElement(['Preto', 'Branco', 'Prata', 'Laranja', 'Azul', 'Vermelho']),
             'plate' => strtoupper($this->faker->unique()->bothify('???#?##')),
         ];
     }
