@@ -101,27 +101,12 @@ class ParkingController extends CrudController
 
         $saida = Carbon::now();
 
-        /*
-         * Caso a entrada seja maior que o horário atual,
-         * consideramos que o veículo entrou no dia anterior.
-         *
-         * Exemplo:
-         * Entrada: 23:00
-         * Saída:   01:00
-         */
         if ($entrada->greaterThan($saida)) {
             $entrada->subDay();
         }
 
         $minutos = $entrada->diffInMinutes($saida);
 
-        /*
-         * R$ 10,00 por hora.
-         *
-         * Exemplo:
-         * 60 minutos = R$ 10
-         * 90 minutos = R$ 15
-         */
         $horas = $minutos / 60;
 
         $preco = $horas * 10;

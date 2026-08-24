@@ -5,11 +5,9 @@
         <li class="breadcrumb-item">
             <a href="{{ route('home') }}">Home</a>
         </li>
-
         <li class="breadcrumb-item">
             <a href="{{ route('parking') }}">Estacionamentos</a>
         </li>
-
         <li class="breadcrumb-item active">
             {{ isset($parking) ? 'Editar estacionamento' : 'Cadastro de estacionamento' }}
         </li>
@@ -18,21 +16,12 @@
 
 @section('content')
     <div class="container">
-
-        <h2>
-            {{ isset($parking) ? 'Editar estacionamento' : 'Cadastro de estacionamento' }}
-        </h2>
+        <h2>{{ isset($parking) ? 'Editar estacionamento' : 'Cadastro de estacionamento' }}</h2>
 
         @if ($errors->any())
             <div class="alert alert-dismissible alert-danger" style="width: 50rem">
                 <strong>Erro!</strong><br>
-
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert">
-                </button>
-
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 <ul class="mb-0 list-unstyled">
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -41,41 +30,23 @@
             </div>
         @endif
 
-        <form
-            method="post"
-            action="{{ isset($parking)
-                ? route('parking.edit', [
-                    'ticket' => \App\Services\EncrypterService::encrypt($parking->ticket)
-                ])
-                : route('parking.create')
-            }}"
-        >
+        <form method="post" action="{{ isset($parking)
+            ? route('parking.edit', ['ticket' => \App\Services\EncrypterService::encrypt($parking->ticket)])
+            : route('parking.create') }}">
             @csrf
 
             <div>
-                <label for="vehicles_id" class="form-label mt-2">
-                    Veículo
-                </label>
-
-                <select
-                    class="form-select"
-                    id="vehicles_id"
-                    name="vehicles_id"
-                    required
-                >
+                <label for="vehicles_id" class="form-label mt-2">Veículo</label>
+                <select class="form-select" id="vehicles_id" name="vehicles_id" required>
                     <option value="" disabled
                         {{ old('vehicles_id', $parking->vehicles_id ?? '') == '' ? 'selected' : '' }}>
                         Selecione o veículo
                     </option>
 
                     @foreach($vehicles as $vehicle)
-                        <option
-                            value="{{ $vehicle->id }}"
-                            {{ old('vehicles_id', $parking->vehicles_id ?? '') == $vehicle->id ? 'selected' : '' }}
-                        >
-                            {{ $vehicle->brand }}
-                            {{ $vehicle->model }}
-                            - {{ $vehicle->plate }}
+                        <option value="{{ $vehicle->id }}"
+                            {{ old('vehicles_id', $parking->vehicles_id ?? '') == $vehicle->id ? 'selected' : '' }}>
+                            {{ $vehicle->brand }} {{ $vehicle->model }} - {{ $vehicle->plate }}
                         </option>
                     @endforeach
                 </select>
@@ -83,17 +54,8 @@
 
             @if(isset($parking))
                 <div>
-                    <label for="ticket" class="form-label mt-2">
-                        Ticket
-                    </label>
-
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="ticket"
-                        value="{{ $parking->ticket }}"
-                        readonly
-                    >
+                    <label for="ticket" class="form-label mt-2">Ticket</label>
+                    <input type="text" class="form-control" id="ticket" value="{{ $parking->ticket }}" readonly>
                 </div>
             @endif
 
@@ -115,13 +77,8 @@
                 <button type="submit" class="btn btn-primary">
                     {{ isset($parking) ? 'Salvar alterações' : 'Salvar estacionamento' }}
                 </button>
-
-                <a href="{{ route('parking') }}" class="btn btn-secondary">
-                    Cancelar
-                </a>
+                <a href="{{ route('parking') }}" class="btn btn-secondary">Cancelar</a>
             </div>
-
         </form>
-
     </div>
 @endsection
