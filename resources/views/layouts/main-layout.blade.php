@@ -26,7 +26,7 @@
                     <a class="nav-link {{request()->routeIs('vehicles*') ? 'active' : ''}}" href="{{route('vehicles')}}">Veículos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{request()->routeIs('parking*') ? 'active' : ''}}" href="{{route('parking')}}">Estacionamentos</a>
+                    <a class="nav-link {{request()->routeIs('parking*') ? 'active' : ''}}" href="{{route('parking')}}">Tickets</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{request()->routeIs('users*') ? 'active' : ''}}" href="{{route('users')}}}">Usuários</a>
