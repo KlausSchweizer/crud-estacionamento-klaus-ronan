@@ -111,41 +111,6 @@
                 >
             </div>
 
-            <div>
-                <label for="horario_saida" class="form-label mt-2">
-                    Horário de saída
-                </label>
-
-                <input
-                    type="time"
-                    class="form-control"
-                    id="horario_saida"
-                    name="horario_saida"
-                    value="{{ old('horario_saida', $parking->horario_saida ?? '') }}"
-                >
-            </div>
-
-            <div>
-                <label for="preco" class="form-label mt-2">
-                    Preço
-                </label>
-
-                <div class="input-group">
-                    <span class="input-group-text">R$</span>
-
-                    <input
-                        type="number"
-                        step="0.01"
-                        min="0"
-                        class="form-control"
-                        id="preco"
-                        name="preco"
-                        placeholder="Digite o preço"
-                        value="{{ old('preco', $parking->preco ?? '') }}"
-                    >
-                </div>
-            </div>
-
             <div class="mt-4 mb-4">
                 <button type="submit" class="btn btn-primary">
                     {{ isset($parking) ? 'Salvar alterações' : 'Salvar estacionamento' }}

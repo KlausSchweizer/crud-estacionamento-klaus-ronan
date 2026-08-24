@@ -24,7 +24,7 @@
                             <label for="exampleInputEmail1" class="form-label">Digite seu e-mail</label>
                             <input type="email" class="form-control" name="email" id="exampleInputEmail1"
                                    aria-describedby="emailHelp"
-                                   placeholder="exemplo@email.com">
+                                   placeholder="exemplo@email.com" value="{{old('email')}}">
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label mt-4">Digite sua senha</label>

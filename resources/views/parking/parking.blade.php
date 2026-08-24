@@ -1,3 +1,4 @@
+@php use App\Services\EncrypterService; @endphp
 @extends('layouts.main-layout')
 
 @section('breadcrumb')
@@ -108,16 +109,16 @@
 
                     <td>
 
-                        {{ $parking->vehicle->brand }}
+                        {{ $parking->vehicle?->brand }}
 
-                        {{ $parking->vehicle->model }}
+                        {{ $parking->vehicle?->model }}
 
                     </td>
 
 
                     <td>
 
-                        {{ $parking->vehicle->plate }}
+                        {{ $parking->vehicle?->plate }}
 
                     </td>
 
@@ -201,7 +202,7 @@
                                         'parking.exit',
                                         [
                                             'ticket' =>
-                                            \App\Services\EncrypterService::encrypt(
+                                            EncrypterService::encrypt(
                                                 $parking->ticket
                                             )
                                         ]
@@ -228,7 +229,7 @@
                                     'parking.editPage',
                                     [
                                         'ticket' =>
-                                        \App\Services\EncrypterService::encrypt(
+                                        EncrypterService::encrypt(
                                             $parking->ticket
                                         )
                                     ]
@@ -248,7 +249,7 @@
                                     'parking.delete',
                                     [
                                         'ticket' =>
-                                        \App\Services\EncrypterService::encrypt(
+                                        EncrypterService::encrypt(
                                             $parking->ticket
                                         )
                                     ]
