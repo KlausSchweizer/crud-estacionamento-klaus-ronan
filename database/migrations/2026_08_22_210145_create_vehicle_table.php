@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('brand');
             $table->string('model');
-            $table->string('plate');
+            $table->string('plate')->unique();
             $table->string('color');
             $table->softDeletes();
             $table->timestamps();
