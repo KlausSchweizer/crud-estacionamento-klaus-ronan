@@ -31,6 +31,7 @@ Route::middleware([CheckIsLogged::class])->group(function () {
     Route::post('/usuarios/editar/{id}', [UserController::class, 'save'])->name('users.edit');
     Route::post('/usuarios/{id}', [UserController::class, 'delete'])->name('users.delete');
 
+    Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 });
 
 Route::middleware([CheckIsNotLogged::class])->group(function () {

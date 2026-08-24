@@ -29,9 +29,15 @@
                     <a class="nav-link {{request()->routeIs('parking*') ? 'active' : ''}}" href="{{route('parking')}}">Estacionamentos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{request()->routeIs('users*') ? 'active' : ''}}" href="{{route('users')}}}">Usuários</a>
+                    <a class="nav-link {{request()->routeIs('users*') ? 'active' : ''}}" href="{{route('users')}}">Usuários</a>
                 </li>
             </ul>
+            <div>
+                <form method="post" action="{{route('auth.logout')}}">
+                    @csrf
+                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Logout</button>
+                </form>
+            </div>
         </div>
     </div>
 </nav>
