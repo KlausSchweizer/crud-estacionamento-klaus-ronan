@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ParkingController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\UserController;
@@ -20,6 +21,27 @@ Route::middleware([CheckIsLogged::class])->group(function () {
     Route::post('/veiculos/editar/{id}', [VehicleController::class, 'save'])->name('vehicles.edit');
     Route::post('/veiculos/{id}', [VehicleController::class, 'delete'])->name('vehicles.delete');
 
+    Route::get('/estacionamentos', [ParkingController::class, 'view'])
+        ->name('parking');
+
+    Route::get('/estacionamentos/cadastrar', [ParkingController::class, 'createPage'])
+        ->name('parking.createPage');
+
+    Route::post('/estacionamentos/cadastrar', [ParkingController::class, 'save'])
+        ->name('parking.create');
+
+    Route::get('/estacionamentos/editar/{ticket}', [ParkingController::class, 'editPage'])
+        ->name('parking.editPage');
+
+    Route::post('/estacionamentos/editar/{ticket}', [ParkingController::class, 'save'])
+        ->name('parking.edit');
+
+    Route::post('/estacionamentos/saida/{ticket}', [ParkingController::class, 'registrarSaida'])
+        ->name('parking.exit');
+
+    Route::post('/estacionamentos/{ticket}', [ParkingController::class, 'delete'])
+        ->name('parking.delete');
+    Route::get('/usuarios', [MainController::class, 'users'])->name('users');
     Route::get('/estacionamentos', [MainController::class, 'parking'])->name('parking');
 
     Route::get('/usuarios', [UserController::class, 'view'])->name('users');
