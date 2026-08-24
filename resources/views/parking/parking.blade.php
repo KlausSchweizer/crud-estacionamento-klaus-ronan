@@ -1,3 +1,4 @@
+@php use App\Services\EncrypterService; @endphp
 @extends('layouts.main-layout')
 
 @section('breadcrumb')

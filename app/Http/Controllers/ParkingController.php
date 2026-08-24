@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class ParkingController extends CrudController
 {
-    function save(Request $request, ?string $ticket = null)
+    function save(Request $request, ?string $id = null)
     {
         $request->validate([
             'vehicles_id' => 'required|exists:vehicles,id',
@@ -21,8 +21,8 @@ class ParkingController extends CrudController
             'horario_entrada.required' => 'Insira o horário de entrada.',
         ]);
 
-        if ($ticket) {
-            $decryptedTicket = EncrypterService::decrypt($ticket);
+        if ($id) {
+            $decryptedTicket = EncrypterService::decrypt($id);
 
             $parking = Parking::where(
                 'ticket',
@@ -66,9 +66,9 @@ class ParkingController extends CrudController
         );
     }
 
-    function delete(string $ticket)
+    function delete(string $id)
     {
-        $decryptedTicket = EncrypterService::decrypt($ticket);
+        $decryptedTicket = EncrypterService::decrypt($id);
 
         $parking = Parking::where(
             'ticket',

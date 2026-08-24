@@ -60,9 +60,17 @@
             @endif
 
             <div>
-                <label for="horario_entrada" class="form-label mt-2">Horário de entrada</label>
-                <input type="time" class="form-control" id="horario_entrada" name="horario_entrada"
-                    value="{{ old('horario_entrada', $parking->horario_entrada ?? '') }}">
+                <label for="horario_entrada" class="form-label mt-2">
+                    Horário de entrada
+                </label>
+
+                <input
+                    type="time"
+                    class="form-control"
+                    id="horario_entrada"
+                    name="horario_entrada"
+                    value="{{ old('horario_entrada', $parking->horario_entrada ?? '') }}"
+                >
             </div>
 
             <div class="mt-4 mb-4">
