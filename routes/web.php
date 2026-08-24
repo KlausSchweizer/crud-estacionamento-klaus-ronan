@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Middleware\CheckIsLogged;
 use App\Http\Middleware\CheckIsNotLogged;
@@ -20,7 +21,16 @@ Route::middleware([CheckIsLogged::class])->group(function () {
     Route::post('/veiculos/{id}', [VehicleController::class, 'delete'])->name('vehicles.delete');
 
     Route::get('/estacionamentos', [MainController::class, 'parking'])->name('parking');
-    Route::get('/usuarios', [MainController::class, 'users'])->name('users');
+
+    Route::get('/usuarios', [UserController::class, 'view'])->name('users');
+
+    Route::get('/usuarios/cadastrar', [UserController::class, 'createPage'])->name('users.createPage');
+    Route::post('/usuarios/cadastrar', [UserController::class, 'save'])->name('users.create');
+
+    Route::get('/usuarios/editar/{id}', [UserController::class, 'editPage'])->name('users.edit');
+    Route::post('/usuarios/editar/{id}', [UserController::class, 'save'])->name('users.edit');
+    Route::post('/usuarios/{id}', [UserController::class, 'delete'])->name('users.delete');
+
 });
 
 Route::middleware([CheckIsNotLogged::class])->group(function () {

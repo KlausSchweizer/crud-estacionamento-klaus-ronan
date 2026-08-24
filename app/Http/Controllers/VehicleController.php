@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Vehicle;
 use App\Services\EncrypterService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Crypt;
 
 class VehicleController extends CrudController
 {
@@ -55,7 +54,7 @@ class VehicleController extends CrudController
 
     function editPage(string $id)
     {
-        $decrypted_id = Crypt::decrypt($id);
+        $decrypted_id = EncrypterService::decrypt($id);
         $vehicle = Vehicle::where('id', '=', $decrypted_id)->first();
         return view('vehicles.form', compact('vehicle'));
     }
@@ -74,8 +73,4 @@ class VehicleController extends CrudController
         return view('vehicles.vehicles', ['vehicles' => Vehicle::all()]);
     }
 
-    function findById(string $id)
-    {
-        // TODO: Implement findById() method.
-    }
 }
