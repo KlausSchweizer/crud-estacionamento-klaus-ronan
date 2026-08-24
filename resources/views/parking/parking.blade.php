@@ -108,16 +108,16 @@
 
                     <td>
 
-                        {{ $parking->vehicle->brand }}
+                        {{ $parking->vehicle?->brand }}
 
-                        {{ $parking->vehicle->model }}
+                        {{ $parking->vehicle?->model }}
 
                     </td>
 
 
                     <td>
 
-                        {{ $parking->vehicle->plate }}
+                        {{ $parking->vehicle?->plate }}
 
                     </td>
 
