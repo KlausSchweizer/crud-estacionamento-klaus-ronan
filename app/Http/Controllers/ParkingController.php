@@ -10,38 +10,6 @@ use Illuminate\Http\Request;
 
 class ParkingController extends CrudController
 {
-    function save(Request $request, ?string $id = null)
-    {
-        $request->validate([
-            'vehicles_id' => 'required|exists:vehicles,id',
-            'horario_entrada' => 'required',
-        ], [
-            'vehicles_id.required' => 'Selecione um veículo.',
-            'vehicles_id.exists' => 'Veículo inválido.',
-            'horario_entrada.required' => 'Insira o horário de entrada.',
-        ]);
-
-        if ($id) {
-            $decryptedTicket = EncrypterService::decrypt($id);
-
-            $parking = Parking::where(
-                'ticket',
-                $decryptedTicket
-            )->firstOrFail();
-        } else {
-            $parking = new Parking();
-        }
-
-        $parking->vehicles_id = $request->input('vehicles_id');
-        $parking->horario_entrada = $request->input('horario_entrada');
-
-        $parking->save();
-
-        return redirect()
-            ->route('parking')
-            ->with('success', 'Ticket cadastrado com sucesso!');
-    }
-
     function createPage()
     {
         $vehicles = Vehicle::all();
@@ -116,6 +84,12 @@ class ParkingController extends CrudController
 
         $parking->save();
 
+        $user = session('user');
+        activity()
+            ->performedOn($parking)
+            ->causedBy($user)
+            ->log("O veículo foi retirado.");
+
         return redirect()
             ->route('parking')
             ->with(
@@ -125,9 +99,44 @@ class ParkingController extends CrudController
             );
     }
 
+    function save(Request $request, ?string $id = null)
+    {
+        $request->validate([
+            'vehicles_id' => 'required|exists:vehicles,id',
+            'horario_entrada' => 'required',
+        ], [
+            'vehicles_id.required' => 'Selecione um veículo.',
+            'vehicles_id.exists' => 'Veículo inválido.',
+            'horario_entrada.required' => 'Insira o horário de entrada.',
+        ]);
+
+        if ($id) {
+            $decryptedTicket = EncrypterService::decrypt($id);
+
+            $parking = Parking::where(
+                'ticket',
+                $decryptedTicket
+            )->firstOrFail();
+        } else {
+            $parking = new Parking();
+        }
+
+        $parking->vehicles_id = $request->input('vehicles_id');
+        $parking->horario_entrada = $request->input('horario_entrada');
+
+        $parking->save();
+
+        return redirect()
+            ->route('parking')
+            ->with('success', 'Ticket cadastrado com sucesso!');
+    }
+
     function view()
     {
-        $parkings = Parking::with('vehicle')->get();
+        $parkings = Parking::with('vehicle')
+            ->orderByRaw('horario_saida IS NULL DESC')
+            ->orderBy('ticket', 'desc')
+            ->get();
 
         return view(
             'parking.parking',
