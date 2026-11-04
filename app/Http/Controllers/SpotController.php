@@ -8,15 +8,56 @@ use Illuminate\Http\Request;
 
 class SpotController extends CrudController
 {
-    //
-    function save(Request $request, ?string $id)
+    function save(Request $request, ?string $id = null)
     {
-        // TODO: Implement save() method.
+        if (!$id) {
+            $lastSpot = Spot::orderBy('id', 'desc')->first();
+
+            if ($lastSpot) {
+                $rowLetter = $lastSpot->row;
+                $rowLetter++;
+                $rowLetter = strtoupper($rowLetter);
+            } else {
+                $rowLetter = 'A';
+            }
+
+            while (Spot::where('row', $rowLetter)->where('index', 1)->exists()) {
+                $rowLetter++;
+                $rowLetter = strtoupper($rowLetter);
+            }
+
+            Spot::create([
+                'row' => $rowLetter,
+                'index' => 1,
+            ]);
+        } else {
+            $rowLetter = strtoupper($id);
+
+            $lastIndex = Spot::where('row', $rowLetter)->max('index') ?? 0;
+            $nextIndex = $lastIndex + 1;
+
+            Spot::create([
+                'row' => $rowLetter,
+                'index' => $nextIndex,
+            ]);
+        }
+
+        return redirect()->route('spot');
     }
 
     function delete(string $id)
     {
-        // TODO: Implement delete() method.
+        $spot = Spot::findOrFail($id);
+
+        $isOcupada = $spot->parking && is_null($spot->parking->horario_saida);
+
+        if ($isOcupada) {
+            return redirect()->route('spot')->with('error', 'Não é possível excluir uma vaga que está ocupada!');
+        }
+
+        $spot->forceDelete();
+
+        return redirect()->route('spot')->with('success', 'Vaga excluída com sucesso!');
     }
 
     function view()

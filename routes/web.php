@@ -39,11 +39,11 @@ Route::middleware([CheckIsLogged::class])->group(function () {
 
     Route::get('/vagas', [SpotController::class, 'view'])
         ->name('spot');
-    Route::post('/vagas/cadastrar', [ParkingController::class, 'save'])
+    Route::post('/vagas/cadastrar/{id?}', [SpotController::class, 'save'])
         ->name('spot.create');
-    Route::post('/vagas/editar/{ticket}', [ParkingController::class, 'save'])
+    Route::post('/vagas/editar/{ticket}', [SpotController::class, 'save'])
         ->name('spot.edit');
-    Route::post('/vagas/{ticket}', [ParkingController::class, 'delete'])
+    Route::post('/vagas/{id}', [SpotController::class, 'delete'])
         ->name('spot.delete');
 
     Route::get('/usuarios', [UserController::class, 'view'])->name('users');

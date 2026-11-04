@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('spots', function (Blueprint $table) {
             $table->id();
 
-            $table->char('row', 1);
+            $table->string('row');
             $table->integer('index');
 
             $table->unique(['row', 'index']);

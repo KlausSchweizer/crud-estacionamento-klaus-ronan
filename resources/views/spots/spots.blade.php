@@ -13,17 +13,25 @@
     <div class="container">
         <div class="d-flex justify-content-between mb-4">
             <h2>Vagas de estacionamento</h2>
-            <a class="text-decoration-none" href="{{ route('parking.createPage') }}">
-                <button type="button" class="btn btn-success">
+            <form action="{{ route('spot.create') }}" method="POST" class="flex-shrink-0 m-0">
+                @csrf
+                <button type="submit" class="btn btn-success">
                     <i class="me-2 fas fa-plus"></i>
                     Adicionar
                 </button>
-            </a>
+            </form>
         </div>
 
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show mt-3">
                 {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show mt-3">
+                {{ session('error') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
@@ -67,6 +75,13 @@
                                     onmouseover="this.style.transform='scale(1.1)'"
                                     onmouseout="this.style.transform='scale(1)'">
 
+                                    <form action="{{ route('spot.delete', $spot->id) }}" method="POST" class="position-absolute top-0 end-0 m-1" onsubmit="return confirm('Deseja realmente excluir esta vaga?');">
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger btn-sm p-0 d-flex align-items-center justify-content-center" style="width: 12px; height: 12px; font-size: 8px; z-index: 3;" title="Excluir vaga">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </form>
+
                                     <span class="position-relative"
                                           style=" line-height: 1; z-index: 2;">{{$isOcupada ? '' : $spot->row }}{{$isOcupada ? '' : $spot->index }}</span>
 
@@ -81,13 +96,17 @@
 
                             @endforeach
 
-                            <div
-                                class="d-flex align-items-center justify-content-center border rounded shadow-sm text-white fw-bold bg-success border-success flex-shrink-0"
-                                style="width: 50px; height: 100px; font-size: 20px; cursor: pointer; transition: transform 0.15s ease;"
-                                onmouseover="this.style.transform='scale1.1)'"
-                                onmouseout="this.style.transform='scale(1)'">
-                                <i class="fas fa-plus"></i>
-                            </div>
+                            <form action="{{ route('spot.create', [$rowLetter]) }}" method="POST"
+                                  class="flex-shrink-0 m-0">
+                                @csrf
+                                <button type="submit"
+                                        class="d-flex align-items-center justify-content-center border rounded shadow-sm text-white fw-bold bg-success border-success w-100 h-100 border-0"
+                                        style="width: 50px; height: 100px; font-size: 20px; cursor: pointer; transition: transform 0.15s ease;"
+                                        onmouseover="this.style.transform='scale(1.1)'"
+                                        onmouseout="this.style.transform='scale(1)'">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </form>
 
                         </div>
 
