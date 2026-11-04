@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Parking;
+use App\Models\Spot;
 use App\Models\Vehicle;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

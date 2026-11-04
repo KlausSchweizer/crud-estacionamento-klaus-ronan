@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id('ticket');
 
             $table->foreignId('vehicles_id');
-            $table->foreignId('spot_id')->constrained('spot');
+            $table->foreignId('spots_id')->constrained('spots');
 
             $table->time('horario_entrada');
             $table->time('horario_saida')->nullable();
