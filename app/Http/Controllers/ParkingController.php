@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Parking;
+use App\Models\Spot;
 use App\Models\Vehicle;
 use App\Services\EncrypterService;
 use Carbon\Carbon;
@@ -12,9 +13,15 @@ class ParkingController extends CrudController
 {
     function createPage()
     {
-        $vehicles = Vehicle::all();
+        $vehicles = Vehicle::whereDoesntHave('parkings', function ($query) {
+            $query->whereNull('horario_saida');
+        })->get();
 
-        return view('parking.form', compact('vehicles'));
+        $spots = Spot::whereDoesntHave('parking', function ($query) {
+            $query->whereNull('horario_saida');
+        })->orderBy('row')->orderBy('index')->get();
+
+        return view('parking.form', compact('vehicles', 'spots'));
     }
 
     function editPage(string $ticket)
@@ -26,11 +33,21 @@ class ParkingController extends CrudController
             $decryptedTicket
         )->firstOrFail();
 
-        $vehicles = Vehicle::all();
+        $vehicles = Vehicle::whereDoesntHave('parkings', function ($query) {
+            $query->whereNull('horario_saida');
+        })->orWhere('id', $parking->vehicles_id)
+            ->get();
+
+        $spots = Spot::whereDoesntHave('parking', function ($query) {
+            $query->whereNull('horario_saida');
+        })->orWhere('id', $parking->spots_id)
+            ->orderBy('row')
+            ->orderBy('index')
+            ->get();
 
         return view(
             'parking.form',
-            compact('parking', 'vehicles')
+            compact('parking', 'vehicles', 'spots')
         );
     }
 
@@ -103,10 +120,13 @@ class ParkingController extends CrudController
     {
         $request->validate([
             'vehicles_id' => 'required|exists:vehicles,id',
+            'spots_id' => 'required|exists:spots,id',
             'horario_entrada' => 'required',
         ], [
             'vehicles_id.required' => 'Selecione um veículo.',
             'vehicles_id.exists' => 'Veículo inválido.',
+            'spots_id.required' => 'Selecione uma vaga.',
+            'spots_id.exists' => 'Vaga inválida.',
             'horario_entrada.required' => 'Insira o horário de entrada.',
         ]);
 
@@ -121,7 +141,21 @@ class ParkingController extends CrudController
             $parking = new Parking();
         }
 
+        $veiculoOcupado = Parking::where('vehicles_id', $request->input('vehicles_id'))
+            ->whereNull('horario_saida')
+            ->when($id, function ($query) use ($parking) {
+                return $query->where('ticket', '!=', $parking->ticket);
+            })
+            ->exists();
+
+        if ($veiculoOcupado) {
+            return back()
+                ->withInput()
+                ->withErrors(['vehicles_id' => 'Este veículo já possui um estacionamento ativo em outra vaga.']);
+        }
+
         $parking->vehicles_id = $request->input('vehicles_id');
+        $parking->spots_id = $request->input('spots_id');
         $parking->horario_entrada = $request->input('horario_entrada');
 
         $parking->save();

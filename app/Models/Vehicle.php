@@ -19,6 +19,11 @@ class Vehicle extends Model
         'plate',
     ];
 
+    public function parkings()
+    {
+        return $this->hasMany(Parking::class, 'vehicles_id');
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults();

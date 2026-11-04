@@ -52,6 +52,24 @@
                 </select>
             </div>
 
+            <!-- Select de Vagas Disponíveis -->
+            <div>
+                <label for="spots_id" class="form-label mt-2">Vaga</label>
+                <select class="form-select" id="spots_id" name="spots_id" required>
+                    <option value="" disabled
+                        {{ old('spots_id', $parking->spots_id ?? '') == '' ? 'selected' : '' }}>
+                        Selecione a vaga
+                    </option>
+
+                    @foreach($spots as $spot)
+                        <option value="{{ $spot->id }}"
+                            {{ old('spots_id', $parking->spots_id ?? '') == $spot->id ? 'selected' : '' }}>
+                            {{ $spot->row }}{{ $spot->index }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
             @if(isset($parking))
                 <div>
                     <label for="ticket" class="form-label mt-2">Ticket</label>
