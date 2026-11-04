@@ -22,6 +22,7 @@ class Parking extends Model
 
     protected $fillable = [
         'vehicles_id',
+        'spots_id',
         'horario_entrada',
         'horario_saida',
         'preco',

@@ -18,18 +18,28 @@ class ParkingFactory extends Factory
      */
     public function definition(): array
     {
-
         $entrada = fake()->dateTimeBetween('-1 month', 'now');
-        $saida = fake()->dateTimeBetween($entrada, 'now');
+
+        $saiu = fake()->boolean(50);
+
+        if ($saiu) {
+            $saida = fake()->dateTimeBetween($entrada, 'now');
+            $preco = fake()->randomFloat(2, 5, 100);
+        } else {
+            $saida = null;
+            $preco = null;
+        }
 
         return [
             'vehicles_id' => Vehicle::factory(),
 
+            'spots_id' => Spot::inRandomOrder()->first() ?? Spot::factory(),
+
             'horario_entrada' => $entrada->format('H:i:s'),
 
-            'horario_saida' => $saida->format('H:i:s'),
+            'horario_saida' => $saida ? $saida->format('H:i:s') : null,
 
-            'preco' => fake()->randomFloat(2, 5, 100),
+            'preco' => $preco,
         ];
     }
 }
