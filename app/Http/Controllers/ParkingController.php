@@ -91,7 +91,7 @@ class ParkingController extends CrudController
             ->log("O veículo foi retirado.");
 
         return redirect()
-            ->route('parking')
+            ->back()
             ->with(
                 'success',
                 'Saída registrada! Valor do ticket: R$ ' .

@@ -33,6 +33,11 @@ class Parking extends Model
         return $this->belongsTo(Vehicle::class, 'vehicles_id');
     }
 
+    public function spot()
+    {
+        return $this->belongsTo(Spot::class, 'spots_id');
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
