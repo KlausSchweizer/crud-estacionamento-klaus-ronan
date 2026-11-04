@@ -3,6 +3,7 @@
 use App\Http\Controllers\ParkingController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\SpotController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Middleware\CheckIsLogged;
@@ -35,6 +36,15 @@ Route::middleware([CheckIsLogged::class])->group(function () {
         ->name('parking.exit');
     Route::post('/estacionamentos/{ticket}', [ParkingController::class, 'delete'])
         ->name('parking.delete');
+
+    Route::get('/vagas', [SpotController::class, 'view'])
+        ->name('spot');
+    Route::post('/vagas/cadastrar', [ParkingController::class, 'save'])
+        ->name('spot.create');
+    Route::post('/vagas/editar/{ticket}', [ParkingController::class, 'save'])
+        ->name('spot.edit');
+    Route::post('/vagas/{ticket}', [ParkingController::class, 'delete'])
+        ->name('spot.delete');
 
     Route::get('/usuarios', [UserController::class, 'view'])->name('users');
 
