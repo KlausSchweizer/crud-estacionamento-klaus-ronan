@@ -1,4 +1,3 @@
-@php use App\Services\EncrypterService; @endphp
 @extends('layouts.main-layout')
 
 @section('breadcrumb')
@@ -38,20 +37,46 @@
 
                         <span class="fw-bold text-secondary flex-shrink-0" style="width: 20px;">{{ $rowLetter }}</span>
 
-                        <div class="d-flex align-items-center gap-2 overflow-x-auto pb-2 w-100" style="white-space: nowrap;">
+                        <div class="d-flex align-items-center gap-2 overflow-x-auto pb-2 w-100"
+                             style="white-space: nowrap;">
 
                             @foreach($spotsInRow as $spot)
 
                                 @php
                                     $isOcupada = $spot->parking && is_null($spot->parking->horario_saida);
+                                    $carColor = '#ffffff';
+
+                                    if ($isOcupada && $spot->parking->vehicle) {
+                                        $corVeiculo = strtolower(trim($spot->parking->vehicle->color ?? ''));
+
+                                       $carColor = match($corVeiculo) {
+                                           'preto' => '#1e293b',
+                                            'branco' => '#ffffff',
+                                            'prata' => '#cbd5e1',
+                                            'azul' => '#0d6efd',
+                                            'laranja' => '#f97316',
+                                            'vermelho' => '#ef4444',
+                                            default => '#e2e8f0',
+                                        };
+                                    }
                                 @endphp
 
                                 <div
-                                    class="d-flex align-items-center justify-content-center border rounded shadow-sm text-white fw-bold flex-shrink-0 {{ $isOcupada ? 'bg-danger border-danger' : 'bg-warning border-warning' }}"
+                                    class="d-flex flex-column align-items-center justify-content-center border rounded shadow-sm text-white fw-bold flex-shrink-0 position-relative overflow-hidden {{ $isOcupada ? 'bg-dark border-dark' : 'bg-warning border-warning' }}"
                                     style="width: 50px; height: 100px; font-size: 20px; cursor: pointer; transition: transform 0.15s ease;"
                                     onmouseover="this.style.transform='scale(1.1)'"
                                     onmouseout="this.style.transform='scale(1)'">
-                                    {{ $spot->row }}{{ $spot->index }}
+
+                                    <span class="position-relative"
+                                          style=" line-height: 1; z-index: 2;">{{$isOcupada ? '' : $spot->row }}{{$isOcupada ? '' : $spot->index }}</span>
+
+                                    @if($isOcupada)
+                                        <x-car-icon
+                                            color="{{$carColor}}"
+                                            class="position-absolute"
+                                            style="width: 200px; height: 200px; transform: rotate(90deg); z-index: 1;"/>
+                                    @endif
+
                                 </div>
 
                             @endforeach
@@ -59,7 +84,7 @@
                             <div
                                 class="d-flex align-items-center justify-content-center border rounded shadow-sm text-white fw-bold bg-success border-success flex-shrink-0"
                                 style="width: 50px; height: 100px; font-size: 20px; cursor: pointer; transition: transform 0.15s ease;"
-                                onmouseover="this.style.transform='scale(1.1)'"
+                                onmouseover="this.style.transform='scale1.1)'"
                                 onmouseout="this.style.transform='scale(1)'">
                                 <i class="fas fa-plus"></i>
                             </div>

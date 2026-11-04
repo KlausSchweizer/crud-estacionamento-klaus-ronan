@@ -14,4 +14,9 @@ class Spot extends Model
         'row',
         'index'
     ];
+
+    public function parking()
+    {
+        return $this->hasOne(Parking::class, 'spots_id')->whereNull('horario_saida');
+    }
 }
