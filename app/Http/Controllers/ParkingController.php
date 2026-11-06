@@ -6,6 +6,7 @@ use App\Models\Parking;
 use App\Models\Spot;
 use App\Models\Vehicle;
 use App\Services\EncrypterService;
+use App\Services\PDFService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -67,7 +68,7 @@ class ParkingController extends CrudController
             ->with('success', 'Ticket excluído com sucesso!');
     }
 
-    function registrarSaida(string $ticket)
+    function registrarSaida(string $ticket, PDFService $PDFService)
     {
         $decryptedTicket = EncrypterService::decrypt($ticket);
 
@@ -114,6 +115,8 @@ class ParkingController extends CrudController
             ->event('Retirada de veículo')
             ->log("O veículo {$modelo} foi retirado do estacionamento. Placa: {$placa}");
 
+        $PDFService->payment($parking);
+
         return redirect()
             ->back()
             ->with(
@@ -129,6 +132,7 @@ class ParkingController extends CrudController
             'vehicles_id' => 'required|exists:vehicles,id',
             'spots_id' => 'required|exists:spots,id',
             'horario_entrada' => 'required',
+            'email' => 'email',
         ], [
             'vehicles_id.required' => 'Selecione um veículo.',
             'vehicles_id.exists' => 'Veículo inválido.',
@@ -164,6 +168,7 @@ class ParkingController extends CrudController
         $parking->vehicles_id = $request->input('vehicles_id');
         $parking->spots_id = $request->input('spots_id');
         $parking->horario_entrada = $request->input('horario_entrada');
+        $parking->email = $request->input('email');
 
         $parking->save();
 

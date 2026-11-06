@@ -90,6 +90,12 @@
                 >
             </div>
 
+            <div>
+                <label for="inputMail" class="form-label mt-2">E-mail (opcional)</label>
+                <input type="email" class="form-control" id="inputMail" name="email" placeholder="Digite o e-mail"
+                       value="{{ old('email', $parking->email ?? '') }}">
+            </div>
+
             <div class="mt-4 mb-4">
                 <button type="submit" class="btn btn-primary">
                     {{ isset($parking) ? 'Salvar alterações' : 'Salvar estacionamento' }}

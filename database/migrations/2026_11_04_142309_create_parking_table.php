@@ -18,6 +18,8 @@ return new class extends Migration {
                 ->constrained('spots')
                 ->cascadeOnDelete();
 
+            $table->string('email')->nullable();
+
             $table->time('horario_entrada');
             $table->time('horario_saida')->nullable();
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendPaymentEmail;
 use App\Models\Parking;
 use App\Models\Vehicle;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -34,17 +35,5 @@ class ReportController extends Controller
         $fileName = "vehicles-$date.pdf";
 
         return $pdf->download($fileName);
-    }
-
-    public function payment(Request $request, int $ticket)
-    {
-        $parking = Parking::where('ticket', $ticket)->first();
-        $pdf = Pdf::loadView('reports.payment-report', ['parking' => $parking])
-            ->setPaper('A4', 'portrait');
-
-        $date = date('d-m-Y-H-i-s');
-        $fileName = "payment-$date.pdf";
-
-        return $pdf->stream($fileName);
     }
 }
