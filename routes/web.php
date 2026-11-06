@@ -58,6 +58,7 @@ Route::middleware([CheckIsLogged::class])->group(function () {
 
     Route::get('/interacoes', [MainController::class, 'logs'])->name('logs');
 
+    Route::get('/veiculos/pdf', [ReportController::class, 'vehicles'])->name('vehicles.pdf');
     Route::get('/interacoes/pdf', [ReportController::class, 'logs'])->name('logs.pdf');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');

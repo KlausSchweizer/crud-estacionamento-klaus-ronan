@@ -27,7 +27,7 @@
         <div class="d-flex justify-content-between">
             <h2>Interações e Logs</h2>
             <a class="text-decoration-none" href="{{ route('logs.pdf') }}">
-                <button type="button" class="btn btn-success"><i class="me-2 fas fa-plus"></i>Baixar PDF</button>
+                <button type="button" class="btn btn-secondary"><i class="me-2 fas fa-download"></i>Baixar PDF</button>
             </a></div>
         @if ($logs->isEmpty())
 
