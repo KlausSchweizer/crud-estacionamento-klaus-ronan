@@ -55,6 +55,8 @@ Route::middleware([CheckIsLogged::class])->group(function () {
     Route::post('/usuarios/editar/{id}', [UserController::class, 'save'])->name('users.edit');
     Route::post('/usuarios/{id}', [UserController::class, 'delete'])->name('users.delete');
 
+    Route::get('/interacoes', [MainController::class, 'logs'])->name('logs');
+
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 });
 

@@ -102,10 +102,17 @@ class ParkingController extends CrudController
         $parking->save();
 
         $user = session('user');
+
+        $parking->load('vehicle');
+
+        $modelo = $parking->vehicle?->model ?? 'Veículo desconhecido';
+        $placa  = $parking->vehicle?->plate ?? 'Sem placa';
+
         activity()
             ->performedOn($parking)
             ->causedBy($user)
-            ->log("O veículo foi retirado.");
+            ->event('Retirada de veículo')
+            ->log("O veículo {$modelo} foi retirado do estacionamento. Placa: {$placa}");
 
         return redirect()
             ->back()
