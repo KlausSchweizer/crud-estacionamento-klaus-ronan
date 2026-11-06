@@ -3,7 +3,7 @@
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-        <li class="breadcrumb-item active">Usuários</li>
+        <li class="breadcrumb-item active">Interações</li>
     </ol>
 @endsection
 
@@ -24,11 +24,7 @@
 @section('content')
     <div class="container">
 
-        <div class="d-flex justify-content-between"><h2>Tabela de usuários</h2>
-            <a class="text-decoration-none" href="{{route('users.createPage')}}">
-                <button type="button" class="btn btn-success"><i class="me-2 fas fa-plus"></i>Adicionar</button>
-            </a>
-        </div>
+        <div class="d-flex justify-content-between"><h2>Interações e Logs</h2></div>
         @if ($logs->isEmpty())
 
             <div class="text-center text-body-secondary mt-5">
@@ -39,28 +35,26 @@
         @else
 
             <div class="table-responsive">
-                <table class="table table-hover align-middle">
+                <table class="table table-hover my-3">
                     <thead>
-                    <tr>
-                        <th>Data</th>
-                        <th>Evento</th>
-                        <th>Descrição</th>
-                        <th>Afetado</th>
-                        <th>Realizado por</th>
+                    <tr class="table-primary">
+                        <th scope="col">Data</th>
+                        <th scope="col">Evento</th>
+                        <th scope="col">Descrição</th>
+                        <th scope="col">Afetado</th>
+                        <th scope="col">Realizado por</th>
                     </tr>
                     </thead>
-                    <tbody class="table-group-divider">
+                    <tbody>
                     @foreach ($logs as $log)
                         <tr>
-                            <td class="text-nowrap num">{{ $log->created_at->format('d/m/Y H:i') }}</td>
-                            <td>{{ $eventos[$log->event] ?? $log->event }}</td>
+                            <td class="text-nowrap num">{{ $log->created_at->format('d/m/Y H:i:s') }}</td>
+                            <td><b>{{ $eventos[$log->event] ?? $log->event }}</b></td>
+                            <td>{{ $log->description }}</td>
                             <td>
-                                {{ $log->description }}
-                                </td>
-                            <td>
-                                <span class="selo">{{ $log->subject?->username }}</span>
+                                <span class="selo">{{ $log->subject?->name ?? $log->subject?->username ?? '—' }}</span>
                             </td>
-                            <td>{{ $log->causer?->username ?? '—' }}</td>
+                            <td>{{ $log->causer?->name ?? $log->causer?->username ?? '—' }}</td>
                         </tr>
                     @endforeach
                     </tbody>

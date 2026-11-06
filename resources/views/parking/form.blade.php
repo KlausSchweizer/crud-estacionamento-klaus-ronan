@@ -52,7 +52,6 @@
                 </select>
             </div>
 
-            <!-- Select de Vagas Disponíveis -->
             <div>
                 <label for="spots_id" class="form-label mt-2">Vaga</label>
                 <select class="form-select" id="spots_id" name="spots_id" required>
