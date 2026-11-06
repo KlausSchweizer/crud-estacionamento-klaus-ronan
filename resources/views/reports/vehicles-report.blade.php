@@ -24,19 +24,6 @@
 </head>
 <body>
 
-@php
-    $eventos = [
-        'created'     => 'Cadastro',
-        'updated'     => 'Edição',
-        'deleted'     => 'Exclusão',
-        'restored'    => 'Restauração',
-        'visualized'  => 'Visualização',
-        'login'       => 'Login',
-        'logout'      => 'Logout',
-        'retirada'    => 'Retirada',
-    ];
-@endphp
-
 <div class="cabecalho">
     <h1>Veículos — Estacione Aqui</h1>
 </div>

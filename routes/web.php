@@ -60,6 +60,7 @@ Route::middleware([CheckIsLogged::class])->group(function () {
 
     Route::get('/veiculos/pdf', [ReportController::class, 'vehicles'])->name('vehicles.pdf');
     Route::get('/interacoes/pdf', [ReportController::class, 'logs'])->name('logs.pdf');
+    Route::get('/pagamento/pdf/{ticket}', [ReportController::class, 'payment'])->name('payment.pdf');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 });
