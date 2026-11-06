@@ -24,7 +24,11 @@
 @section('content')
     <div class="container">
 
-        <div class="d-flex justify-content-between"><h2>Interações e Logs</h2></div>
+        <div class="d-flex justify-content-between">
+            <h2>Interações e Logs</h2>
+            <a class="text-decoration-none" href="{{ route('logs.pdf') }}">
+                <button type="button" class="btn btn-success"><i class="me-2 fas fa-plus"></i>Baixar PDF</button>
+            </a></div>
         @if ($logs->isEmpty())
 
             <div class="text-center text-body-secondary mt-5">

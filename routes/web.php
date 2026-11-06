@@ -3,6 +3,7 @@
 use App\Http\Controllers\ParkingController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SpotController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
@@ -56,6 +57,8 @@ Route::middleware([CheckIsLogged::class])->group(function () {
     Route::post('/usuarios/{id}', [UserController::class, 'delete'])->name('users.delete');
 
     Route::get('/interacoes', [MainController::class, 'logs'])->name('logs');
+
+    Route::get('/interacoes/pdf', [ReportController::class, 'logs'])->name('logs.pdf');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 });
