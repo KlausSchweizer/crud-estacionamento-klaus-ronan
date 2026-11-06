@@ -43,11 +43,25 @@ class AuthController extends Controller
         $user->save();
         session(['user' => $user]);
 
+        activity()
+            ->performedOn($user)
+            ->causedBy($user)
+            ->event('login')
+            ->log('O usuário foi autenticado.');
+
         return redirect('/');
     }
 
     public function logout() {
+        $user = session('user');
         session()->forget('user');
+
+        activity()
+            ->performedOn($user)
+            ->causedBy($user)
+            ->event('logout')
+            ->log('O usuário foi deslogado.');
+
         return redirect()->route('auth.login');
     }
 }

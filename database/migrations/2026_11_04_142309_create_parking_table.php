@@ -14,6 +14,11 @@ return new class extends Migration {
             $table->id('ticket');
 
             $table->foreignId('vehicles_id');
+            $table->foreignId('spots_id')
+                ->constrained('spots')
+                ->cascadeOnDelete();
+
+            $table->string('email')->nullable();
 
             $table->time('horario_entrada');
             $table->time('horario_saida')->nullable();
@@ -21,6 +26,7 @@ return new class extends Migration {
             $table->double('preco')->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

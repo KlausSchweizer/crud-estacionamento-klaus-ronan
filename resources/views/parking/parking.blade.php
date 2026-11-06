@@ -31,91 +31,96 @@
 
         <table class="table table-hover my-3">
             <thead>
-                <tr class="table-primary">
-                    <th>Ticket</th>
-                    <th>Veículo</th>
-                    <th>Placa</th>
-                    <th>Entrada</th>
-                    <th>Saída</th>
-                    <th>Preço</th>
-                    <th>Status</th>
-                    <th class="text-center">Ações</th>
-                </tr>
+            <tr class="table-primary">
+                <th>Ticket</th>
+                <th>Veículo</th>
+                <th>Placa</th>
+                <th>Entrada</th>
+                <th>Saída</th>
+                <th>Vaga</th>
+                <th>Preço</th>
+                <th>Status</th>
+                <th class="text-center">Ações</th>
+            </tr>
             </thead>
 
             <tbody>
-                @foreach($parkings as $parking)
-                    <tr>
-                        <th scope="row">{{ $parking->ticket }}</th>
+            @foreach($parkings as $parking)
+                <tr>
+                    <th scope="row">{{ $parking->ticket }}</th>
 
-                        <td>
-                            {{ $parking->vehicle?->brand }}
-                            {{ $parking->vehicle?->model }}
-                        </td>
+                    <td>
+                        {{ $parking->vehicle?->brand }}
+                        {{ $parking->vehicle?->model }}
+                    </td>
 
-                        <td>{{ $parking->vehicle?->plate }}</td>
-                        <td>{{ $parking->horario_entrada }}</td>
+                    <td>{{ $parking->vehicle?->plate }}</td>
+                    <td>{{ $parking->horario_entrada }}</td>
 
-                        <td>
-                            @if($parking->horario_saida)
-                                {{ $parking->horario_saida }}
-                            @else
-                                <span class="text-muted">-</span>
-                            @endif
-                        </td>
+                    <td>
+                        @if($parking->horario_saida)
+                            {{ $parking->horario_saida }}
+                        @else
+                            <span class="text-muted">-</span>
+                        @endif
+                    </td>
 
-                        <td>
-                            @if($parking->preco !== null)
-                                R$ {{ number_format($parking->preco, 2, ',', '.') }}
-                            @else
-                                <span class="text-muted">-</span>
-                            @endif
-                        </td>
+                    <td>
+                        {{ $parking->spot?->row }}{{ $parking->spot?->index }}
+                    </td>
 
-                        <td>
-                            @if($parking->horario_saida)
-                                <span class="badge bg-secondary">Finalizado</span>
-                            @else
-                                <span class="badge bg-success">Estacionado</span>
-                            @endif
-                        </td>
+                    <td>
+                        @if($parking->preco !== null)
+                            R$ {{ number_format($parking->preco, 2, ',', '.') }}
+                        @else
+                            <span class="text-muted">-</span>
+                        @endif
+                    </td>
 
-                        <td class="text-center">
-                            <div class="d-flex justify-content-center gap-2">
-                                @if(!$parking->horario_saida)
-                                    <form method="post"
-                                        action="{{ route('parking.exit', ['ticket' => \App\Services\EncrypterService::encrypt($parking->ticket)]) }}">
-                                        @csrf
-                                        <button type="submit"
+                    <td>
+                        @if($parking->horario_saida)
+                            <span class="badge bg-secondary">Finalizado</span>
+                        @else
+                            <span class="badge bg-success">Estacionado</span>
+                        @endif
+                    </td>
+
+                    <td class="text-center">
+                        <div class="d-flex justify-content-center gap-2">
+                            @if(!$parking->horario_saida)
+                                <form method="post"
+                                      action="{{ route('parking.exit', ['ticket' => \App\Services\EncrypterService::encrypt($parking->ticket)]) }}">
+                                    @csrf
+                                    <button type="submit"
                                             class="btn btn-success btn-sm rounded-circle d-flex align-items-center justify-content-center"
                                             style="width: 35px; height: 35px;"
                                             title="Registrar saída">
-                                            <i class="fas fa-sign-out-alt"></i>
-                                        </button>
-                                    </form>
-                                @endif
+                                        <i class="fas fa-sign-out-alt"></i>
+                                    </button>
+                                </form>
+                            @endif
 
-                                <a href="{{ route('parking.editPage', ['ticket' => \App\Services\EncrypterService::encrypt($parking->ticket)]) }}"
-                                    class="btn btn-warning btn-sm rounded-circle d-flex align-items-center justify-content-center"
-                                    style="width: 35px; height: 35px;"
-                                    title="Editar">
-                                    <i class="fas fa-pencil-alt text-white"></i>
-                                </a>
+                            <a href="{{ route('parking.editPage', ['ticket' => \App\Services\EncrypterService::encrypt($parking->ticket)]) }}"
+                               class="btn btn-warning btn-sm rounded-circle d-flex align-items-center justify-content-center"
+                               style="width: 35px; height: 35px;"
+                               title="Editar">
+                                <i class="fas fa-pencil-alt text-white"></i>
+                            </a>
 
-                                <form method="post"
-                                    action="{{ route('parking.delete', ['ticket' => \App\Services\EncrypterService::encrypt($parking->ticket)]) }}">
-                                    @csrf
-                                    <button type="submit"
+                            <form method="post"
+                                  action="{{ route('parking.delete', ['ticket' => \App\Services\EncrypterService::encrypt($parking->ticket)]) }}">
+                                @csrf
+                                <button type="submit"
                                         class="btn btn-danger btn-sm rounded-circle d-flex align-items-center justify-content-center"
                                         style="width: 35px; height: 35px;"
                                         title="Excluir">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
             </tbody>
         </table>
     </div>

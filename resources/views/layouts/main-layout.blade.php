@@ -29,7 +29,13 @@
                     <a class="nav-link {{request()->routeIs('parking*') ? 'active' : ''}}" href="{{route('parking')}}">Tickets</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {{request()->routeIs('spot*') ? 'active' : ''}}" href="{{route('spot')}}">Vagas</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {{request()->routeIs('users*') ? 'active' : ''}}" href="{{route('users')}}">Usuários</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{request()->routeIs('logs*') ? 'active' : ''}}" href="{{route('logs')}}">Interações</a>
                 </li>
             </ul>
             <div>
