@@ -58,6 +58,19 @@
                        value="{{ old('plate', $vehicle->plate ?? '') }}">
             </div>
 
+            <div class="mt-3">
+                <label for="clients" class="form-label">Clientes vinculados</label>
+                <select class="form-select" id="clients" name="clients[]" multiple size="6">
+                    @foreach($clients as $client)
+                        <option value="{{ $client->id }}"
+                            {{ in_array($client->id, old('clients', isset($vehicle) ? $vehicle->clients->pluck('id')->all() : [])) ? 'selected' : '' }}>
+                            {{ $client->name }} ({{ $client->email }})
+                        </option>
+                    @endforeach
+                </select>
+                <div class="form-text">Segure Ctrl (ou Command no Mac) para selecionar ou remover vários clientes. Cadastre novos clientes no menu Clientes.</div>
+            </div>
+
             <div class="mt-4 mb-4">
                 <button type="submit" class="btn btn-primary">Salvar Veículo</button>
                 <a href="{{ route('vehicles') }}" class="btn btn-secondary">Cancelar</a>

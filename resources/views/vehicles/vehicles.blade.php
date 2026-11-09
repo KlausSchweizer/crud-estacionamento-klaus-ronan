@@ -49,6 +49,7 @@
                 <th scope="col">Modelo</th>
                 <th scope="col">Cor</th>
                 <th scope="col">Placa</th>
+                <th scope="col">Clientes</th>
                 <th scope="col">Ações</th>
             </tr>
             </thead>
@@ -60,6 +61,7 @@
                     <td>{{ $vehicle->model }}</td>
                     <td>{{ $vehicle->color }}</td>
                     <td>{{ $vehicle->plate }}</td>
+                    <td>{{ $vehicle->clients->pluck('name')->join(', ') ?: 'Nenhum' }}</td>
                     <td class="text-center">
                         <div class="d-flex justify-content-center gap-2">
                             <a href="{{route('vehicles.edit', ['id' => \App\Services\EncrypterService::encrypt($vehicle->id)])}}"

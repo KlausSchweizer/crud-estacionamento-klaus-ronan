@@ -41,7 +41,6 @@ class ParkingFactory extends Factory
             'horario_saida' => $saida ? $saida->format('H:i:s') : null,
 
             'preco' => $preco,
-            'email' => fake()->safeEmail(),
         ];
     }
 }

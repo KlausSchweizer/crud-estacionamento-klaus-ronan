@@ -10,9 +10,17 @@ use App\Http\Controllers\VehicleController;
 use App\Http\Middleware\CheckIsLogged;
 use App\Http\Middleware\CheckIsNotLogged;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ClientController;
 
 Route::middleware([CheckIsLogged::class])->group(function () {
     Route::get('/', [MainController::class, 'index'])->name('home');
+
+    Route::get('/clientes', [ClientController::class, 'view'])->name('clients');
+    Route::get('/clientes/cadastrar', [ClientController::class, 'createPage'])->name('clients.createPage');
+    Route::post('/clientes/cadastrar', [ClientController::class, 'save'])->name('clients.create');
+    Route::get('/clientes/editar/{id}', [ClientController::class, 'editPage'])->name('clients.edit');
+    Route::post('/clientes/editar/{id}', [ClientController::class, 'save'])->name('clients.edit');
+    Route::post('/clientes/{id}', [ClientController::class, 'delete'])->name('clients.delete');
 
     Route::get('/veiculos', [VehicleController::class, 'view'])->name('vehicles');
 

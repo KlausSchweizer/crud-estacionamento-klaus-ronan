@@ -20,6 +20,11 @@ class Vehicle extends Model
         'plate',
     ];
 
+    public function clients()
+    {
+        return $this->belongsToMany(Client::class, 'client_vehicle')->withTimestamps();
+    }
+
     public function parkings()
     {
         return $this->hasMany(Parking::class, 'vehicles_id');
