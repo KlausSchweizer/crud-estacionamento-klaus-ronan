@@ -45,6 +45,7 @@
                         <th scope="col">Data</th>
                         <th scope="col">Evento</th>
                         <th scope="col">Descrição</th>
+                        <th scope="col">Afetado</th>
                         <th scope="col">Realizado por</th>
                     </tr>
                     </thead>
@@ -54,6 +55,9 @@
                             <td class="text-nowrap num">{{ $log->created_at->format('d/m/Y H:i:s') }}</td>
                             <td><b>{{ $eventos[$log->event] ?? $log->event }}</b></td>
                             <td>{{ $log->description }}</td>
+                            <td>
+                                <span class="selo">{{ $log->subject?->name ?? $log->subject?->username ?? '—' }}</span>
+                            </td>
                             <td>{{ $log->causer?->name ?? $log->causer?->username ?? '—' }}</td>
                         </tr>
                     @endforeach
