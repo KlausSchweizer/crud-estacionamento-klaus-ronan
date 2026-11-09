@@ -26,8 +26,7 @@ class Parking extends Model
         'spots_id',
         'horario_entrada',
         'horario_saida',
-        'preco',
-        'email'
+        'preco'
     ];
 
     public function vehicle()

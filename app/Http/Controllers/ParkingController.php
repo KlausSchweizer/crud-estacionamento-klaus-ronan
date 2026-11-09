@@ -132,7 +132,6 @@ class ParkingController extends CrudController
             'vehicles_id' => 'required|exists:vehicles,id',
             'spots_id' => 'required|exists:spots,id',
             'horario_entrada' => 'required',
-            'email' => 'email',
         ], [
             'vehicles_id.required' => 'Selecione um veículo.',
             'vehicles_id.exists' => 'Veículo inválido.',
@@ -168,7 +167,6 @@ class ParkingController extends CrudController
         $parking->vehicles_id = $request->input('vehicles_id');
         $parking->spots_id = $request->input('spots_id');
         $parking->horario_entrada = $request->input('horario_entrada');
-        $parking->email = $request->input('email');
 
         $parking->save();
 

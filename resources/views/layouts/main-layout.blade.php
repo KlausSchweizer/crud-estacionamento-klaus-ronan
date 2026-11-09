@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estacione Aqui</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/lumen/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/quartz/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0-10/css/all.min.css" integrity="sha512-Pv1WJMqAtVgNNct5vhq+4cgkKinKpV1jCwSWD4am9CjwxsJSCkLWKcE/ZBqHnEE1mHs01c8B0GMvcn/pQ/yrog==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
 </head>
@@ -24,6 +24,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{request()->routeIs('vehicles*') ? 'active' : ''}}" href="{{route('vehicles')}}">Veículos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{request()->routeIs('clients*') ? 'active' : ''}}" href="{{route('clients')}}">Clientes</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{request()->routeIs('parking*') ? 'active' : ''}}" href="{{route('parking')}}">Tickets</a>

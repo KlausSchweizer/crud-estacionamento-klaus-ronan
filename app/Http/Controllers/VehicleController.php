@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vehicle;
+use App\Models\Client;
 use App\Services\EncrypterService;
 use Illuminate\Http\Request;
 
@@ -17,6 +18,8 @@ class VehicleController extends CrudController
         }
 
         $request->validate([
+            'clients' => 'nullable|array',
+            'clients.*' => 'integer|distinct|exists:clients,id',
             'brand' => 'required',
             'model' => 'required',
             'color' => 'required',
@@ -43,20 +46,22 @@ class VehicleController extends CrudController
         $vehicle->plate = strtoupper($request->input('plate'));
 
         $vehicle->save();
+        $vehicle->clients()->sync($request->input('clients', []));
 
         return redirect()->route('vehicles')->with('success', 'Salvo com sucesso!');
     }
 
     function createPage()
     {
-        return view('vehicles.form');
+        return view('vehicles.form', ['clients' => Client::orderBy('name')->get()]);
     }
 
     function editPage(string $id)
     {
         $decrypted_id = EncrypterService::decrypt($id);
-        $vehicle = Vehicle::where('id', '=', $decrypted_id)->first();
-        return view('vehicles.form', compact('vehicle'));
+        $vehicle = Vehicle::with('clients')->findOrFail($decrypted_id);
+        $clients = Client::orderBy('name')->get();
+        return view('vehicles.form', compact('vehicle', 'clients'));
     }
 
     function delete(string $id)
@@ -70,7 +75,7 @@ class VehicleController extends CrudController
 
     function view()
     {
-        return view('vehicles.vehicles', ['vehicles' => Vehicle::all()]);
+        return view('vehicles.vehicles', ['vehicles' => Vehicle::with('clients')->get()]);
     }
 
 }
