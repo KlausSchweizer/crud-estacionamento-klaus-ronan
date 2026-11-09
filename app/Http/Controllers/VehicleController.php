@@ -75,7 +75,7 @@ class VehicleController extends CrudController
 
     function view()
     {
-        return view('vehicles.vehicles', ['vehicles' => Vehicle::with('clients')->get()]);
+        return view('vehicles.vehicles', ['vehicles' => Vehicle::with('clients')->latest()->get()]);
     }
 
 }

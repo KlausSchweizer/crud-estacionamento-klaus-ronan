@@ -68,7 +68,6 @@
                         </option>
                     @endforeach
                 </select>
-                <div class="form-text">Segure Ctrl (ou Command no Mac) para selecionar ou remover vários clientes. Cadastre novos clientes no menu Clientes.</div>
             </div>
 
             <div class="mt-4 mb-4">
