@@ -5,23 +5,26 @@ namespace App\Services;
 use App\Mail\SendPaymentEmail;
 use App\Models\Parking;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class PDFService
 {
-    public function payment(Parking $parking)
+    public function payment(Parking $parking): void
     {
-        if ($parking->email == null) {
+        $parking->loadMissing('vehicle.clients');
+        $emails = $parking->vehicle?->clients->pluck('email')->filter()->unique() ?? collect();
+
+        if ($emails->isEmpty()) {
             return;
         }
-        $email = $parking->email;
+
         $pdf = Pdf::loadView('reports.payment-report', ['parking' => $parking])
             ->setPaper('A4', 'portrait');
+        $fileName = 'payment-' . $parking->ticket . '-' . date('d-m-Y-H-i-s') . '.pdf';
 
-        $date = date('d-m-Y-H-i-s');
-        $fileName = "payment-$date.pdf";
-
-        Mail::to($email)->send(new SendPaymentEmail($pdf, $fileName));
+        // Mensagens individuais para não expor endereços de outros clientes.
+        foreach ($emails as $email) {
+            Mail::to($email)->send(new SendPaymentEmail($pdf, $fileName));
+        }
     }
 }
