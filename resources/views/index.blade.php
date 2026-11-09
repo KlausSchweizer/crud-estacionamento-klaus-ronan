@@ -39,5 +39,15 @@
                     </div>
                 </div>
             </a>
+
+            <a href="{{route('spot')}}" class="text-decoration-none">
+                <div class="card text-white bg-primary mb-3 mx-2" style="max-width: 20rem;">
+                    <div class="card-header"><i class="fas fa-warehouse me-2" aria-hidden="true"></i>Vagas</div>
+                    <div class="card-body">
+                        <h4 class="card-title">Cadastro de vagas</h4>
+                        <p class="card-text">Veja as vagas e os veículos estacionados atualmente, gerenciando-as.</p>
+                    </div>
+                </div>
+            </a>
     </div>
 @endsection

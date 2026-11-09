@@ -52,6 +52,23 @@
                 </select>
             </div>
 
+            <div>
+                <label for="spots_id" class="form-label mt-2">Vaga</label>
+                <select class="form-select" id="spots_id" name="spots_id" required>
+                    <option value="" disabled
+                        {{ old('spots_id', $parking->spots_id ?? '') == '' ? 'selected' : '' }}>
+                        Selecione a vaga
+                    </option>
+
+                    @foreach($spots as $spot)
+                        <option value="{{ $spot->id }}"
+                            {{ old('spots_id', $parking->spots_id ?? '') == $spot->id ? 'selected' : '' }}>
+                            {{ $spot->row }}{{ $spot->index }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
             @if(isset($parking))
                 <div>
                     <label for="ticket" class="form-label mt-2">Ticket</label>
@@ -71,6 +88,12 @@
                     name="horario_entrada"
                     value="{{ old('horario_entrada', $parking->horario_entrada ?? '') }}"
                 >
+            </div>
+
+            <div>
+                <label for="inputMail" class="form-label mt-2">E-mail (opcional)</label>
+                <input type="email" class="form-control" id="inputMail" name="email" placeholder="Digite o e-mail"
+                       value="{{ old('email', $parking->email ?? '') }}">
             </div>
 
             <div class="mt-4 mb-4">

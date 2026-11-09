@@ -30,10 +30,16 @@
                 </div>
             </div>
         </div>
-        <div class="d-flex justify-content-between"><h2>Tabela de veículos</h2>
-            <a class="text-decoration-none" href="{{route('vehicles.createPage')}}">
-                <button type="button" class="btn btn-success"><i class="me-2 fas fa-plus"></i>Adicionar</button>
-            </a>
+        <div class="d-flex justify-content-between">
+            <h2>Tabela de veículos</h2>
+            <div>
+                <a class="text-decoration-none" href="{{route('vehicles.createPage')}}">
+                    <button type="button" class="btn btn-success"><i class="me-2 fas fa-plus"></i>Adicionar</button>
+                </a>
+                <a class="text-decoration-none" href="{{route('vehicles.pdf')}}">
+                    <button type="button" class="btn btn-secondary"><i class="me-2 fas fa-download"></i>Baixar PDF</button>
+                </a>
+            </div>
         </div>
         <table class="table table-hover my-3">
             <thead>

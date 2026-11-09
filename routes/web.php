@@ -3,6 +3,8 @@
 use App\Http\Controllers\ParkingController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SpotController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Middleware\CheckIsLogged;
@@ -36,6 +38,15 @@ Route::middleware([CheckIsLogged::class])->group(function () {
     Route::post('/estacionamentos/{ticket}', [ParkingController::class, 'delete'])
         ->name('parking.delete');
 
+    Route::get('/vagas', [SpotController::class, 'view'])
+        ->name('spot');
+    Route::post('/vagas/cadastrar/{id?}', [SpotController::class, 'save'])
+        ->name('spot.create');
+    Route::post('/vagas/editar/{ticket}', [SpotController::class, 'save'])
+        ->name('spot.edit');
+    Route::post('/vagas/{id}', [SpotController::class, 'delete'])
+        ->name('spot.delete');
+
     Route::get('/usuarios', [UserController::class, 'view'])->name('users');
 
     Route::get('/usuarios/cadastrar', [UserController::class, 'createPage'])->name('users.createPage');
@@ -44,6 +55,12 @@ Route::middleware([CheckIsLogged::class])->group(function () {
     Route::get('/usuarios/editar/{id}', [UserController::class, 'editPage'])->name('users.edit');
     Route::post('/usuarios/editar/{id}', [UserController::class, 'save'])->name('users.edit');
     Route::post('/usuarios/{id}', [UserController::class, 'delete'])->name('users.delete');
+
+    Route::get('/interacoes', [MainController::class, 'logs'])->name('logs');
+
+    Route::get('/veiculos/pdf', [ReportController::class, 'vehicles'])->name('vehicles.pdf');
+    Route::get('/interacoes/pdf', [ReportController::class, 'logs'])->name('logs.pdf');
+    Route::get('/pagamento/pdf/{ticket}', [ReportController::class, 'payment'])->name('payment.pdf');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 });
