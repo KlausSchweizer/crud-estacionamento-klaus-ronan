@@ -32,3 +32,4 @@ A erntidade mais fundamental da tabela, associa-se a um veículo e vaga, em que 
 ## Veículos
 
 Relacionamento com clientes. Possui uma cor selecionada que dinamicamente mudará a cor do símbolo do veículo quando este ocupa uma vaga.
+
