@@ -33,3 +33,12 @@ A erntidade mais fundamental da tabela, associa-se a um veículo e vaga, em que 
 
 Relacionamento com clientes. Possui uma cor selecionada que dinamicamente mudará a cor do símbolo do veículo quando este ocupa uma vaga.
 
+# Como rodar
+- Dê o composer update;
+- copie e cole o .env.example como .env na raiz do projeto;
+- Use php artisan key:generate;
+- php artisan migrate --seed;
+- coloque os seus dados de E-mail no .env ou do banco de dados;
+- php artisan serve;
+- Para login basta por usuario admin@exemplo.com e senha 123456.
+
